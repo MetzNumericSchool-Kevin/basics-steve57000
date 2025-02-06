@@ -125,3 +125,4 @@ function acheterPotion() {
 
 // Lancer l'achat de potions
 acheterPotion();
+
