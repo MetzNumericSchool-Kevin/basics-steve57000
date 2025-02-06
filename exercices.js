@@ -4,8 +4,7 @@ const drawLine = ("-").repeat(40);
 /************************************** Définition de variables **************************************/
 
 const storeName = "MNS";
-
-const nbPotion = 10;
+let nbPotion = 10; // Le stock doit pouvoir changer, donc on utilise "let"
 const pricePotion = 20;
 const openStore = true;
 
@@ -17,6 +16,7 @@ if (openStore) console.log(`Bienvenue dans la boutique ${storeName} Aventurier !
 else console.log(`La boutique ${storeName} est fermée`);
 console.log(drawLine);
 
+/************************************** Affichage conditionnel switch **************************************/
 console.log("Version switch");
 switch (openStore) {
     case true:
@@ -52,8 +52,8 @@ function afficherMenu() {
 function demanderChoix() {
     let choix;
     do {
+        console.log(afficherMenu());
         choix = prompt(afficherMenu() + "\nEntre un chiffre entre 1 et 4, ou 'Q' pour quitter :").trim().toLowerCase();
-
         if (choix === "q") {
             alert("👋 Au revoir, Aventurier ! Que la magie soit avec toi !");
             console.log("👋 Au revoir, Aventurier ! Que la magie soit avec toi !");
@@ -62,24 +62,24 @@ function demanderChoix() {
 
         switch (parseInt(choix)) {
             case 1:
-                alert("🏪 Le nom de la boutique est : 'L'Antre Mystique'.");
                 console.log("🏪 Le nom de la boutique est : 'L'Antre Mystique'.");
+                alert("🏪 Le nom de la boutique est : 'L'Antre Mystique'.");
                 break;
             case 2:
-                alert("🔮 Le nom du Sorcier est : 'Merlin l'Enchanteur'.");
                 console.log("🔮 Le nom du Sorcier est : 'Merlin l'Enchanteur'.");
+                alert("🔮 Le nom du Sorcier est : 'Merlin l'Enchanteur'.");
                 break;
             case 3:
-                alert("🧪 Le prix d'une potion de soin est de 10 pièces d'or.");
-                console.log("🧪 Le prix d'une potion de soin est de 10 pièces d'or.");
+                console.log(`🧪 Le prix d'une potion de soin est de ${pricePotion} pièces d'or.`);
+                alert(`🧪 Le prix d'une potion de soin est de ${pricePotion} pièces d'or.`);
                 break;
             case 4:
-                alert("📦 Il reste 5 potions de soin en stock.");
-                console.log("📦 Il reste 5 potions de soin en stock.");
+                console.log(`📦 Il reste ${nbPotion} potions de soin en stock.`);
+                alert(`📦 Il reste ${nbPotion} potions de soin en stock.`);
                 break;
             default:
-                alert("Mh... Désolé aventurier, je ne comprends pas ce que tu souhaites. Refais ton choix ! 😕");
                 console.log("Mh... Désolé aventurier, je ne comprends pas ce que tu souhaites. Refais ton choix ! 😕");
+                alert("Mh... Désolé aventurier, je ne comprends pas ce que tu souhaites. Refais ton choix ! 😕");
         }
     } while (choix !== "q"); // Répéter tant que l'utilisateur ne quitte pas
 }
@@ -87,3 +87,41 @@ function demanderChoix() {
 // Lancer le programme
 demanderChoix();
 
+/************************************** Achat de potions **************************************/
+function acheterPotion() {
+    while (nbPotion > 0) {
+        let quantityPotion;
+        do {
+            quantityPotion = parseInt(prompt(`Combien de potions de soin souhaitez-vous acheter ? (Stock disponible : ${nbPotion})`), 10);
+
+            if (isNaN(quantityPotion) || quantityPotion <= 0 || quantityPotion > nbPotion) {
+                console.log(`❌ Veuillez entrer un nombre valide entre 1 et ${nbPotion}.`)
+                alert(`❌ Veuillez entrer un nombre valide entre 1 et ${nbPotion}.`);
+            }
+        } while (isNaN(quantityPotion) || quantityPotion <= 0 || quantityPotion > nbPotion);
+
+        // Calcul du prix total
+        const priceTotal = quantityPotion * pricePotion;
+        console.log(`💰 Prix de ${quantityPotion} potions de soins : ${priceTotal} 🪙 mon cher Aventurier. 💸`);
+        alert(`💰 Prix de ${quantityPotion} potions de soins : ${priceTotal} 🪙 mon cher Aventurier. 💸`);
+
+        // Mise à jour du stock
+        nbPotion -= quantityPotion;
+
+        // Vérification du stock restant
+        if (nbPotion > 0) {
+            let continu = prompt(`Il reste ${nbPotion} potions en stock. Souhaitez-vous en acheter d'autres ? (Oui / Non)`).trim().toLowerCase();
+            if (continu !== "oui" && continu !== "o") {
+                console.log("Merci pour votre achat, aventurier ! À bientôt !");
+                alert("Merci pour votre achat, aventurier ! À bientôt !");
+                break;
+            }
+        } else {
+            console.log("😢 Désolé, toutes les potions sont vendues !");
+            alert("😢 Désolé, toutes les potions sont vendues !");
+        }
+    }
+}
+
+// Lancer l'achat de potions
+acheterPotion();
