@@ -1,12 +1,11 @@
-alert("Le script est bien chargé !");
-
 const drawLine = ("-").repeat(40);
 /************************************** Définition de variables **************************************/
 
 const storeName = "MNS";
 let nbPotion = 10; // Le stock doit pouvoir changer, donc on utilise "let"
-const pricePotion = 20;
+const pricePotion = 20.50;
 const openStore = true;
+const wizard = "Archibald"
 
 /************************************** Affichage conditionnel **************************************/
 console.log(drawLine);
@@ -55,19 +54,19 @@ function demanderChoix() {
         console.log(afficherMenu());
         choix = prompt(afficherMenu() + "\nEntre un chiffre entre 1 et 4, ou 'Q' pour quitter :").trim().toLowerCase();
         if (choix === "q") {
-            alert("👋 Au revoir, Aventurier ! Que la magie soit avec toi !");
             console.log("👋 Au revoir, Aventurier ! Que la magie soit avec toi !");
+            alert("👋 Au revoir, Aventurier ! Que la magie soit avec toi !");
             return;
         }
 
         switch (parseInt(choix)) {
             case 1:
-                console.log("🏪 Le nom de la boutique est : 'L'Antre Mystique'.");
-                alert("🏪 Le nom de la boutique est : 'L'Antre Mystique'.");
+                console.log(`🏪 Le nom de la boutique est : ${storeName}.`);
+                alert(`🏪 Le nom de la boutique est : ${storeName}.`);
                 break;
             case 2:
-                console.log("🔮 Le nom du Sorcier est : 'Merlin l'Enchanteur'.");
-                alert("🔮 Le nom du Sorcier est : 'Merlin l'Enchanteur'.");
+                console.log(`🔮 Le nom du Sorcier est : ${wizard}.`);
+                alert(`🔮 Le nom du Sorcier est : ${wizard}.`);
                 break;
             case 3:
                 console.log(`🧪 Le prix d'une potion de soin est de ${pricePotion} pièces d'or.`);
