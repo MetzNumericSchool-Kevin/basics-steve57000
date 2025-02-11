@@ -2,10 +2,13 @@ const drawLine = ("-").repeat(40);
 /************************************** Définition de variables **************************************/
 
 const storeName = "MNS";
-let nbPotion = 10; // Le stock doit pouvoir changer, donc on utilise "let"
-const pricePotion = 20.50;
+let nbPotion = 10;
+const pricePotion = 20;
 const openStore = true;
 const wizard = "Archibald"
+
+// L'argent de l'aventurier
+let myMoney = 100;
 
 /************************************** Affichage conditionnel **************************************/
 console.log(drawLine);
@@ -88,16 +91,20 @@ demanderChoix();
 
 /************************************** Achat de potions **************************************/
 function acheterPotion() {
-    while (nbPotion > 0) {
+    while (nbPotion > 0 && myMoney > pricePotion) {
         let quantityPotion;
         do {
-            quantityPotion = parseInt(prompt(`Combien de potions de soin souhaitez-vous acheter ? (Stock disponible : ${nbPotion})`), 10);
+            quantityPotion = parseInt(prompt(`Combien de potions de soin souhaitez-vous acheter ? (Stock disponible : ${nbPotion})`));
 
             if (isNaN(quantityPotion) || quantityPotion <= 0 || quantityPotion > nbPotion) {
                 console.log(`❌ Veuillez entrer un nombre valide entre 1 et ${nbPotion}.`)
                 alert(`❌ Veuillez entrer un nombre valide entre 1 et ${nbPotion}.`);
             }
-        } while (isNaN(quantityPotion) || quantityPotion <= 0 || quantityPotion > nbPotion);
+            if (myMoney <= pricePotion) {
+                console.log(`❌ Vous n'avez pas assez d'argent.`)
+                alert(`❌ Vous n'avez pas assez d'argent.`);
+            }
+        } while (isNaN(quantityPotion) || quantityPotion <= 0 || quantityPotion > nbPotion || myMoney < pricePotion);
 
         // Calcul du prix total
         const priceTotal = quantityPotion * pricePotion;
@@ -106,7 +113,10 @@ function acheterPotion() {
 
         // Mise à jour du stock
         nbPotion -= quantityPotion;
+        myMoney -= priceTotal;
 
+        console.log(`Il vous reste ${myMoney}💰`);
+        alert(`Il vous reste ${myMoney}💰`);
         // Vérification du stock restant
         if (nbPotion > 0) {
             let continu = prompt(`Il reste ${nbPotion} potions en stock. Souhaitez-vous en acheter d'autres ? (Oui / Non)`).trim().toLowerCase();
@@ -115,6 +125,10 @@ function acheterPotion() {
                 alert("Merci pour votre achat, aventurier ! À bientôt !");
                 break;
             }
+        }
+        if (myMoney < pricePotion && myMoney <= 0) {
+            console.log(`Désolé, vous n'avez plus assez d'argent, vous avez actuellement ${myMoney}`);
+            alert(`Désolé, vous n'avez plus assez d'argent, vous avez actuellement ${myMoney}`);
         } else {
             console.log("😢 Désolé, toutes les potions sont vendues !");
             alert("😢 Désolé, toutes les potions sont vendues !");
@@ -124,3 +138,8 @@ function acheterPotion() {
 
 // Lancer l'achat de potions
 acheterPotion();
+
+/************************************** Bourse de l'Aventurier **************************************/
+
+
+
